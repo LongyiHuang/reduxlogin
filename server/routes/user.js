@@ -79,13 +79,28 @@ router.post('/',authenticate,(req,res) => {
                         }
                     );
                 }else{
-
+                    errors.global = "No such user";
+                    res.status(500).json(errors);
                 }
             });
         }else{
             res.status(400).json(errors);
         }
     })
+});
+
+router.get('/:identifier',(req,res) => {
+    console.log("identifier",req.param('identifier'));
+    User.query(
+        {where:{username:req.param('identifier')},orWhere:{email:req.param('identifier')}}
+    ).fetch({columns:["id","email",'username']})
+        .then(user => {
+            res.json({"success":true,user:user});
+        }).catch(err => {
+            let errors = {};
+            errors.global = err.sqlMessage;
+            res.status(500).json(errors);
+    });
 });
 
 

@@ -3,10 +3,9 @@ import validator from 'validator';
 import isEmpty from 'lodash/isEmpty';
 import bcrypt from 'bcrypt';
 import moment from 'moment';
-
-
-
 import User from '../models/user';
+
+
 
 let router = express.Router();
 
@@ -98,17 +97,20 @@ router.post('/',(req,res) => {
                 created_at: time,
                 updated_at: time
             }).save()
-              .then(user => {
-                  res.json({"success": true});
-              }).catch(err => {
-                    errors.global = err.sqlMessage;
-                    res.status(500).json(errors);
-              });
+                .then(user => {
+                    res.json({"success": true});
+                }).catch(err => {
+                errors.global = err.sqlMessage;
+                res.status(500).json(errors);
+            });
         }else{
             res.status(400).json(errors);
         }
     })
 });
+
+
+
 
 
 export default router;

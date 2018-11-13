@@ -30,7 +30,6 @@ class FlashMessageList extends React.Component{
                 }
             }
         }
-        console.log("new:",newMessages);
         if(newMessages.length > 0){
             setTimeout(()=>{
                 this.props.deleteFlashMessage(newMessages[0].id);
